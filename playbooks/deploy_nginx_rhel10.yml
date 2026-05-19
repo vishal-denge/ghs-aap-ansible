@@ -1,0 +1,38 @@
+---
+- name: Deploy NGINX on RHEL10
+  hosts: rhel10
+  become: true
+
+  tasks:
+
+    - name: Install nginx
+      ansible.builtin.dnf:
+        name: nginx
+        state: present
+
+    - name: Enable nginx
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: true
+
+    - name: Open firewall
+      ansible.posix.firewalld:
+        service: http
+        permanent: true
+        immediate: true
+        state: enabled
+
+    - name: Deploy index page
+      ansible.builtin.copy:
+        dest: /usr/share/nginx/html/index.html
+        content: |
+          <html>
+          <h1>Welcome from AAP</h1>
+          <h2>NGINX deployment successful</h2>
+          </html>
+
+    - name: Validate nginx
+      ansible.builtin.uri:
+        url: http://localhost
+        status_code: 200
