@@ -1,6 +1,6 @@
 ---
 - name: Deploy NGINX on RHEL10
-  hosts: rhel10
+  hosts: foreman_content_view_rhel10
   become: true
 
   tasks:

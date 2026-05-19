@@ -1,6 +1,6 @@
 ---
 - name: Patch RHEL9 Servers
-  hosts: rhel9
+  hosts: foreman_content_view_rhl9
   become: true
   serial: 2
 
